@@ -10,34 +10,31 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options  
 
 pokemon_names = [
-    "Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", 
-    "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", 
-    "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", 
-    "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", 
-    "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", 
-    "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", 
-    "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", 
-    "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", 
-    "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", 
-    "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", 
-    "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", 
-    "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", 
-    "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", 
-    "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", 
-    "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", 
-    "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", 
-    "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", 
-    "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", 
-    "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", 
+    "Bulbasaur", "Charmander",
+    "Squirtle",  "Caterpie",  
+    "Weedle", "Pidgey", "Rattata", 
+    "Spearow",  "Ekans", "Pikachu",
+    "Sandshrew", "Nidoran", "Clefairy", "Vulpix", "Jigglypuff",  "Zubat", "Oddish",  
+    "Paras",  "Venonat",  "Diglett",  "Meowth", 
+     "Psyduck", "Mankey",  "Growlithe",  
+    "Poliwag",  "Abra",  "Machop",  "Bellsprout", "Tentacool", 
+    "Geodude", "Ponyta",  "Slowpoke", 
+     "Magnemite", "Farfetch'd", "Doduo", "Seel", 
+     "Grimer",  "Shellder",  "Gastly", 
+    "Onix", "Drowzee",  "Krabby",  "Voltorb",  "Exeggcute",  "Cubone",  "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", 
+     "Rhyhorn", "Chansey", "Tangela", "Kangaskhan", "Horsea", 
+     "Goldeen", "Staryu", "Mr. Mime", "Scyther", "Jynx", 
+    "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp","Lapras", 
     "Ditto", "Eevee", "Vaporeon", 
-    "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", 
+    "Jolteon", "Flareon", "Porygon", "Omanyte", 
     "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", 
-    "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"
+    "Dratini",  "Mewtwo", "Mew"
 ]
 
 chrome_options = Options()
 chrome_options.add_argument("--disable-gpu") 
 chrome_options.add_argument("--no-sandbox") 
+chrome_options.add_argument("--headless")
 
 download_folder = "dataset/pokemon"
 if not os.path.exists(download_folder):
@@ -47,7 +44,7 @@ driver = webdriver.Chrome(options=chrome_options)
 
 for pokemon in pokemon_names:
     print(f"Searching for {pokemon}")
-
+    pokemon += " pokemon"
     pokemon_folder = os.path.join(download_folder, pokemon)
     if not os.path.exists(pokemon_folder):
         os.makedirs(pokemon_folder)
@@ -62,7 +59,7 @@ for pokemon in pokemon_names:
     time.sleep(2)
 
     scroll_count = 0
-    max_scrolls = 3
+    max_scrolls = 6
     image_elements = driver.find_elements(By.CSS_SELECTOR, "img[class='YQ4gaf']")
 
     while scroll_count < max_scrolls:
@@ -78,7 +75,7 @@ for pokemon in pokemon_names:
     downloaded_images = set()
     count = 1  # Reset counter for each pokemon
 
-    for img in image_elements[:75]:
+    for img in image_elements[:120]:
         try:
             img_url = img.get_attribute("src")
 
