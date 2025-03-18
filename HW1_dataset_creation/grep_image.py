@@ -74,19 +74,14 @@ for pokemon in pokemon_names:
 
     downloaded_images = set()
     count = 1  # Reset counter for each pokemon
-
     for img in image_elements[:120]:
         try:
             img_url = img.get_attribute("src")
-
             if not img_url:
                 continue
-
             if img_url in downloaded_images:
                 continue
-
             downloaded_images.add(img_url)
-
             if img_url.startswith("data:image"):
                 img_data = base64.b64decode(img_url.split(",")[1])
             else:
@@ -95,7 +90,6 @@ for pokemon in pokemon_names:
                     img_data = response.content
                 else:
                     continue
-
             img_path = os.path.join(pokemon_folder, f"{pokemon}_{count}.jpg")
             with open(img_path, "wb") as f:
                 f.write(img_data)
